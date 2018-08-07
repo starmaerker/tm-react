@@ -3,12 +3,36 @@ var PropTypes = require('prop-types');
 var queryString = require('query-string');
 var api = require('../utils/api');
 var Link = require('react-router-dom').Link;
+var PlayerPreview = require('./PlayerPreview');
+
+function Profile(props) {
+    var info = props.info;
+    
+    return (
+        <PlayerPreview avatar={info.avatar_url} username={info.login}>
+            <ul className='space-list-items'>
+                {info.name && <li>{info.name}</li>}
+                {info.location && <li>{info.location}</li>}
+                {info.company && <li>{info.company}</li>}
+                <li>Followers: {info.followers}</li>
+                <li>Following: {info.following}</li>
+                <li>Public Repos: {info.public_repos}</li>
+                {info.blog && <li><a href={info.blog}>{info.blog}</a></li>}
+            </ul>
+        </PlayerPreview>
+    )
+}
+
+Profile.PropTypes = {
+    info: PropTypes.object.isRequired
+}
 
 function Player(props) {
-    return(
+    return (
         <div>
             <h1 className='header'>{props.label}</h1>
-            <h3 style= {{textAlign: 'center'}}>Score: {props.score}</h3>
+            <h3 style={{ textAlign: 'center' }}>Score: {props.score}</h3>
+            <Profile info={props.profile} />
         </div>
     )
 }
@@ -35,16 +59,16 @@ class Results extends React.Component {
         api.battle([
             players.playerOneName,
             players.playerTwoName
-        ]).then(function(results) {
+        ]).then(function (results) {
             if (results === null) {
-                return this.setState(function() {
+                return this.setState(function () {
                     return {
                         error: 'Looks like there was an error. Check that both users exists on Github.',
                         loading: false
                     }
                 });
             }
-            this.setState(function() {
+            this.setState(function () {
                 return {
                     error: null,
                     winner: results[0],
@@ -54,8 +78,8 @@ class Results extends React.Component {
             });
         }.bind(this));
     }
-    
-    render() {     
+
+    render() {
         var error = this.state.error;
         var winner = this.state.winner;
         var loser = this.state.loser;
@@ -65,23 +89,23 @@ class Results extends React.Component {
             return <p>loading</p>
         }
 
-        if(error) {
-            return(
+        if (error) {
+            return (
                 <div>
                     <p>{error}</p>
                     <Link to='/battle'>Reset</Link>
                 </div>
-            ) 
+            )
         }
-        
-        return(
+
+        return (
             <div className='row'>
-                <Player 
+                <Player
                     label='Winner'
                     score={winner.score}
                     profile={winner.profile}
                 />
-                <Player 
+                <Player
                     label='Loser'
                     score={loser.score}
                     profile={loser.profile}
