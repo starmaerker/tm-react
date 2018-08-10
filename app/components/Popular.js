@@ -4,7 +4,7 @@ var api = require('../utils/api');
 var Loading = require('./Loading');
 
 function SelectedLanguage(props) {
-    var languages = ['All', 'JavaScript', 'CSS', 'HTML', 'csharp', 'Dart', 'fsharp', 'Rust', 'Python', 'R'];
+    var languages = ['All', 'JavaScript', 'CSS', 'HTML', 'Csharp', 'Dart', 'Java', 'Rust', 'Python', 'R'];
 
     return (
         <ul className='languages'>
