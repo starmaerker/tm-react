@@ -23,7 +23,6 @@ class App extends React.Component {
                         <Route path='/popular' component={Popular} />                        
                         <Route render={() => <p>Error 404 Page not found</p>} />
                     </Switch>
-
                 </div>
             </Router>
         )
