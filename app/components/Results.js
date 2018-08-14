@@ -42,16 +42,12 @@ Player.PropTypes = {
     profile: PropTypes.object.isRequired
 }
 
-class Results extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            winner: null,
-            loser: null,
-            error: null,
-            loading: true
-        }
+class Results extends React.Component {  
+    state = {
+        winner: null,
+        loser: null,
+        error: null,
+        loading: true
     }
     componentDidMount() {
         const { playerOneName, playerTwoName } = queryString.parse(this.props.location.search);
@@ -75,7 +71,7 @@ class Results extends React.Component {
     }
 
     render() {
-        const { error, winner, loser, loading } = this.state;        
+        const { error, winner, loser, loading } = this.state;
 
         if (loading === true) {
             return <Loading />
