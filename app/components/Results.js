@@ -42,32 +42,33 @@ Player.PropTypes = {
     profile: PropTypes.object.isRequired
 }
 
-class Results extends React.Component {  
+class Results extends React.Component {
     state = {
         winner: null,
         loser: null,
         error: null,
         loading: true
     }
-    componentDidMount() {
+    async componentDidMount() {
         const { playerOneName, playerTwoName } = queryString.parse(this.props.location.search);
-        battle([
+
+        const player = await battle([
             playerOneName,
             playerTwoName
-        ]).then((results) => {
-            if (results === null) {
-                return this.setState(() => ({
-                    error: 'Looks like there was an error. Check that both users exists on Github.',
-                    loading: false
-                }));
-            }
-            this.setState(() => ({
-                error: null,
-                winner: results[0],
-                loser: results[1],
+        ])
+
+        if (results === null) {
+            return this.setState(() => ({
+                error: 'Looks like there was an error. Check that both users exists on Github.',
                 loading: false
             }));
-        });
+        }
+        this.setState(() => ({
+            error: null,
+            winner: results[0],
+            loser: results[1],
+            loading: false
+        }));
     }
 
     render() {
