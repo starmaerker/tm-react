@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { queryString } from 'query-string';
+import queryString from 'query-string';
 import { battle } from '../utils/api';
 import { Link } from 'react-router-dom';
 import PlayerPreview from './PlayerPreview';
@@ -49,15 +49,15 @@ class Results extends React.Component {
         error: null,
         loading: true
     }
-    async componentDidMount() {
+    async componentDidMount() {    
         const { playerOneName, playerTwoName } = queryString.parse(this.props.location.search);
-
-        const player = await battle([
+        
+        const players = await battle([
             playerOneName,
             playerTwoName
         ])
 
-        if (results === null) {
+        if (players === null) {
             return this.setState(() => ({
                 error: 'Looks like there was an error. Check that both users exists on Github.',
                 loading: false
@@ -65,8 +65,8 @@ class Results extends React.Component {
         }
         this.setState(() => ({
             error: null,
-            winner: results[0],
-            loser: results[1],
+            winner: players[0],
+            loser: players[1],
             loading: false
         }));
     }

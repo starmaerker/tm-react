@@ -10,7 +10,7 @@ async function getProfile(username) {
 }
 
 async function getRepos(username) {
-    const respone = await fetch(`https://api.github.com/users/${username}/repos${params}&per_page=100`);
+    const response = await fetch(`https://api.github.com/users/${username}/repos${params}&per_page=100`);
 
     return response.json();
 }
@@ -20,7 +20,7 @@ function getStarCount(repos) {
 }
 
 function calculateScore({ followers }, repos) {
-    const reposCount = repos.data.length;
+    const reposCount = repos.length;
     return (followers * 3) + getStarCount(repos) + reposCount;
 }
 
@@ -45,10 +45,10 @@ function sortPlayers(players) {
     return players.sort((a, b) => b.score - a.score);
 }
 
-export async function battle(players) {
+export async function battle(players) {    
     const results = await Promise.all(players.map(getUserData))
-        .catch(handleError);
-
+        .catch(handleError);  
+    
     return results === null
         ? results
         : sortPlayers(results);
