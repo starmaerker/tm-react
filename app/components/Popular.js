@@ -4,7 +4,7 @@ import { fetchPopularRepos } from '../utils/api';
 import Loading from './Loading';
 
 function SelectedLanguage({ selectedLanguage, onSelect }) {
-    const languages = ['All', 'JavaScript', 'CSS', 'HTML', 'Csharp', 'Dart', 'Java', 'Rust', 'Python', 'R'];
+    const languages = ['All', 'JavaScript', 'SQL', 'Julia', 'Csharp', 'PHP', 'Java', 'Haskell', 'Python', 'R'];
     return (
         <ul className='languages'>
             {languages.map((lang) => (
